@@ -60,15 +60,13 @@ contract ERC1155Tradeable is ERC1155, Ownable {
         }
     }
 
-    function create(string memory _uri, uint256 _initialSupply, bytes memory _data) public onlyOwner returns (uint256 _id) {
+    function create(string calldata _uri, uint256 _initialSupply) public onlyOwner returns (uint256 _id) {
         _id = ++nonce;
 
         if (bytes(_uri).length > 0) {
             customUri[_id] = _uri;
             emit URI(_uri, _id);
         }
-
-        _mint(address(0x0), _id, 0, _data);
 
         tokenSupply[_id] = _initialSupply;
         
@@ -107,7 +105,7 @@ contract ERC1155Tradeable is ERC1155, Ownable {
     }
 
     function _exists(uint256 _id) internal view returns (bool) {
-        return nonce > _id;
+        return nonce >= _id;
     }
     
     function exists(uint256 _id) external view returns (bool) {
