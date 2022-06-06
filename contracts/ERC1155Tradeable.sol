@@ -68,6 +68,8 @@ contract ERC1155Tradeable is ERC1155, Ownable {
             emit URI(_uri, _id);
         }
 
+        emit TransferSingle(msg.sender, address(0x0), msg.sender, _id, 0);
+
         tokenSupply[_id] = _initialSupply;
         
         return _id;
